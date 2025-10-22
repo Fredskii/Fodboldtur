@@ -53,6 +53,14 @@ def top3_mangler():
         print("------------------------------\n")
     menu()
 
+# Nulstil listen (tøm alle betalinger)
+def nulstil_liste():
+    for medlem in fodboldtur:
+        fodboldtur[medlem] = 0  # sæt alle indbetalinger til 0
+        gem_data()  # gem ændringerne
+    print("\nAlle indbetalinger er nulstillet!\n")
+    menu()
+
 # Afslut programmet
 def afslut():
     gem_data()
@@ -64,7 +72,8 @@ def menu():
     print("1: Registrer betaling")
     print("2: Print liste")
     print("3: Vis top 3 der mangler mest")
-    print("4: Afslut program")
+    print("4: Nulstil betalinger")
+    print("5: Afslut program")
     valg = input("Indtast dit valg: ")
     if valg == '1':
         registrer_betaling()
@@ -73,6 +82,8 @@ def menu():
     elif valg == '3':
         top3_mangler()
     elif valg == '4':
+        nulstil_liste()
+    elif valg == '5':
         afslut()
 
 # Start programmet
