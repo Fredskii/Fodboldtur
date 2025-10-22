@@ -1,11 +1,9 @@
 import pickle
 
 filename = 'betalinger.pk'
-
 fodboldtur ={}
 
 PRIS = 4500  # Total pris pr. person
-
 
 # Gemmer alle data i filen
 def gem_data():
@@ -16,9 +14,9 @@ def gem_data():
 # Registrer betaling fra et medlem
 def registrer_betaling():
     navn_input = input("Indtast navn på medlem: ")
-    belob = float(input("Indtast beløb: "))
+    beløb = float(input("Indtast beløb: "))
 
-    # Find eksisterende medlem uanset store/små bogstaver
+    # Find eksisterende medlemmer uanset store/små bogstaver
     eksisterende = None
     for medlem in fodboldtur:
         if medlem.lower() == navn_input.lower():
@@ -26,13 +24,15 @@ def registrer_betaling():
             break
 
     if eksisterende:
-        fodboldtur[eksisterende] += belob
-        print(f"{eksisterende} har nu i alt indbetalt {fodboldtur[eksisterende]} kr.")
-    else:
-        fodboldtur[navn_input] = belob
-        print(f"{navn_input} er tilføjet med indbetaling på {belob} kr.")
+        fodboldtur[eksisterende] += beløb
+        print(f"{eksisterende} har nu i alt indbetalt {fodboldtur[eksisterende]} kr.\n")
 
-    gem_data()  # gem data efter ændring
+    # Nye medlemmer
+    else:
+        fodboldtur[navn_input] = beløb
+        print(f"{navn_input} er tilføjet med indbetaling på {beløb} kr.\n")
+
+    gem_data()  # Gem data efter ændring
     menu()
 
 # Udskriv oversigt over alle medlemmer
@@ -52,7 +52,7 @@ def top3_mangler():
     if not fodboldtur:
         print("Ingen betalinger registreret endnu.")
     else:
-        # Sortere efter hvor meget der mangler (højeste først)
+        # Sortere de top 3 der mangler mest
         sorteret = sorted(fodboldtur.items(), key=lambda x: (PRIS - x[1]), reverse=True)
         print("\n--- Top 3 der mangler mest ---")
         for navn, betalt in sorteret[:3]:
@@ -62,11 +62,11 @@ def top3_mangler():
         print("------------------------------\n")
     menu()
 
-# Nulstil listen (tøm alle betalinger)
+# Nulstil listen
 def nulstil_liste():
     for medlem in fodboldtur:
-        fodboldtur[medlem] = 0  # sæt alle indbetalinger til 0
-        gem_data()  # gem ændringerne
+        fodboldtur[medlem] = 0  # Sæt alle indbetalinger til 0
+        gem_data()  # Gem ændringerne
     print("\nAlle indbetalinger er nulstillet!\n")
     menu()
 
