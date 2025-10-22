@@ -1,15 +1,11 @@
 import pickle
 
 filename = 'betalinger.pk'
+
+fodboldtur ={}
+
 PRIS = 4500  # Total pris pr. person
 
-# Forsøg at læse tidligere gemt data, ellers start tomt
-try:
-    infile = open(filename, 'rb')
-    fodboldtur = pickle.load(infile)
-    infile.close()
-except FileNotFoundError:
-    fodboldtur = {}
 
 # Gemmer alle data i filen
 def gem_data():
@@ -39,7 +35,7 @@ def printliste():
             print(f"{navn}: {betalt} kr. (FULDT BETALT)")
         else:
             print(f"{navn}: {betalt} kr. (mangler {mangler} kr.)")
-    print("--------------------------\n")
+    print("-------------------------------------\n")
     menu()
 
 # Vis de tre medlemmer, der mangler mest
@@ -47,20 +43,20 @@ def top3_mangler():
     if not fodboldtur:
         print("Ingen betalinger registreret endnu.")
     else:
-        # Sortér efter hvor meget der mangler (højeste først)
+        # Sortere efter hvor meget der mangler (højeste først)
         sorteret = sorted(fodboldtur.items(), key=lambda x: (PRIS - x[1]), reverse=True)
         print("\n--- Top 3 der mangler mest ---")
         for navn, betalt in sorteret[:3]:
             mangler = PRIS - betalt
             if mangler > 0:
                 print(f"{navn}: mangler {mangler} kr.")
-        print("-------------------------------\n")
+        print("------------------------------\n")
     menu()
 
 # Afslut programmet
 def afslut():
     gem_data()
-    print("Programmet er afsluttet!")
+    print("\nProgrammet er afsluttet!")
 
 # Menu
 def menu():
@@ -80,4 +76,7 @@ def menu():
         afslut()
 
 # Start programmet
+infile = open(filename,'rb')
+fodboldtur = pickle.load(infile)
+infile.close()
 menu()
