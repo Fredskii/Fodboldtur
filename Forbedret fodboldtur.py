@@ -3,7 +3,7 @@ import pickle
 filename = 'betalinger.pk'
 PRIS = 4500  # Total pris pr. person
 
-# Forsøg at læse tidligere gemte data – ellers start tomt
+# Forsøg at læse tidligere gemt data, ellers start tomt
 try:
     infile = open(filename, 'rb')
     fodboldtur = pickle.load(infile)
@@ -17,7 +17,7 @@ def gem_data():
     pickle.dump(fodboldtur, outfile)
     outfile.close()
 
-# 1. Registrer betaling fra et medlem
+# Registrer betaling fra et medlem
 def registrer_betaling():
     navn = input("Indtast navn på medlem: ").capitalize()
     belob = float(input("Indtast beløb: "))
@@ -27,22 +27,22 @@ def registrer_betaling():
     else:
         fodboldtur[navn] = belob
     print(f"{navn} har nu i alt indbetalt {fodboldtur[navn]} kr.")
-    gem_data()  # 3. Gem data efter hver ændring
+    gem_data()  # data gemmes efter hver ændring
     menu()
 
-# 2. Udskriv oversigt over alle medlemmer
+# Udskriv oversigt over alle medlemmer
 def printliste():
     print("\n--- Betalingsoversigt ---")
     for navn, betalt in fodboldtur.items():
         mangler = PRIS - betalt
         if mangler <= 0:
-            print(f"{navn}: {betalt} kr. (FULDT BETALT ✅)")
+            print(f"{navn}: {betalt} kr. (FULDT BETALT)")
         else:
             print(f"{navn}: {betalt} kr. (mangler {mangler} kr.)")
     print("--------------------------\n")
     menu()
 
-# 4. Vis de tre medlemmer, der mangler mest
+# Vis de tre medlemmer, der mangler mest
 def top3_mangler():
     if not fodboldtur:
         print("Ingen betalinger registreret endnu.")
@@ -78,9 +78,6 @@ def menu():
         top3_mangler()
     elif valg == '4':
         afslut()
-    else:
-        print("Ugyldigt valg. Prøv igen.")
-        menu()
 
 # Start programmet
 menu()
