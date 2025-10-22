@@ -15,15 +15,24 @@ def gem_data():
 
 # Registrer betaling fra et medlem
 def registrer_betaling():
-    navn = input("Indtast navn på medlem: ").capitalize()
+    navn_input = input("Indtast navn på medlem: ")
     belob = float(input("Indtast beløb: "))
-    # Hvis medlemmet findes, læg beløbet til, ellers opret nyt medlem
-    if navn in fodboldtur:
-        fodboldtur[navn] += belob
+
+    # Find eksisterende medlem uanset store/små bogstaver
+    eksisterende = None
+    for medlem in fodboldtur:
+        if medlem.lower() == navn_input.lower():
+            eksisterende = medlem
+            break
+
+    if eksisterende:
+        fodboldtur[eksisterende] += belob
+        print(f"{eksisterende} har nu i alt indbetalt {fodboldtur[eksisterende]} kr.")
     else:
-        fodboldtur[navn] = belob
-    print(f"{navn} har nu i alt indbetalt {fodboldtur[navn]} kr.")
-    gem_data()  # data gemmes efter hver ændring
+        fodboldtur[navn_input] = belob
+        print(f"{navn_input} er tilføjet med indbetaling på {belob} kr.")
+
+    gem_data()  # gem data efter ændring
     menu()
 
 # Udskriv oversigt over alle medlemmer
